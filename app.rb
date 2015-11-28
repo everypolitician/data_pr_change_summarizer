@@ -30,8 +30,10 @@ class PullRequestReview
   end
 
   def handle_webhook
+    return unless request['HTTP_X_GITHUB_EVENT'] == 'pull_request'
     request.body.rewind
     payload = JSON.parse(request.body.read)
+    return unless %w(opened synchronize).include?(payload['action'])
     self.class.perform_async(payload['repository']['full_name'], payload['number'])
   end
 end
