@@ -14,24 +14,18 @@ class PullRequestReview
       # Get the JSON and parse it
       before = JSON.parse(open(file[:raw_url]).read)
       after = JSON.parse(open(file[:raw_url].sub(pull_request[:head][:sha], pull_request[:base][:sha])).read)
-      collection = 'persons'
-
-      # Find out which record are new or changed
-      # This leaves us with things in after that aren't in before
-      different = after[collection] - before[collection]
-      ids = after[collection].map { |d| d['id'] }
-
-      # Find records which have been deleted
-      changes = different.map do |person|
-        person_before = before[collection].find { |p| p['id'] == person['id'] }
-        person_after = after[collection].find { |p| p['id'] == person['id'] }
-        changed_keys = person.keys.find_all do |key|
-          person_before[key] != person_after[key]
-        end
-        [person['id'], Hash[changed_keys.map { |key| [key, person_after[key] - person_before[key]] }]]
+      stats = {}
+      %w[persons organizations].each do |collection|
+        before_map = Hash[before[collection].map { |item| [item['id'], item] }]
+        after_map = Hash[after[collection].map { |item| [item['id'], item] }]
+        before_ids = before[collection].map { |item| item['id'] }
+        after_ids = after[collection].map { |item| item['id'] }
+        stats[collection] = {
+          added: (after_ids - before_ids).map { |id| after_map[id] },
+          removed: (before_ids - after_ids).map { |id| before_map[id] }
+        }
       end
-
-      binding.pry
+      j stats
     end
   end
 
@@ -41,7 +35,3 @@ class PullRequestReview
     self.class.perform_async(payload['repository']['full_name'], payload['number'])
   end
 end
-
-require 'pry'
-pr_review = PullRequestReview.new
-pr_review.perform('everypolitician/everypolitician-data', 1663)
