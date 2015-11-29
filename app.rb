@@ -19,12 +19,8 @@ class PullRequestReview
         after_map = Hash[after[collection].map { |item| [item['id'], item] }]
         before_ids = before[collection].map { |item| item['id'] }
         after_ids = after[collection].map { |item| item['id'] }
-        stats[collection] = {
-          added: (after_ids - before_ids).map { |id| after_map[id] },
-          removed: (before_ids - after_ids).map { |id| before_map[id] }
-        }
+        logger.info "collection=#{collection} added=#{(after_ids - before_ids).size} removed=#{(before_ids - after_ids).size}"
       end
-      jj stats
     end
   end
 
