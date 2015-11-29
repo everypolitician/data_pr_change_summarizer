@@ -24,7 +24,7 @@ class PullRequestReview
           removed: (before_ids - after_ids).map { |id| before_map[id] }
         }
       end
-      j stats
+      jj stats
     end
   end
 
