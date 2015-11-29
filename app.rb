@@ -32,6 +32,7 @@ class PullRequestReview
     return unless request.env['HTTP_X_GITHUB_EVENT'] == 'pull_request'
     request.body.rewind
     payload = JSON.parse(request.body.read)
+    return unless payload['repository']['full_name'] == everypolitician_data_repo
     return unless %w(opened synchronize).include?(payload['action'])
     self.class.perform_async(payload['repository']['full_name'], payload['number'])
   end
@@ -40,5 +41,9 @@ class PullRequestReview
 
   def github
     @github ||= Octokit::Client.new(access_token: ENV['GITHUB_ACCESS_TOKEN'])
+  end
+
+  def everypolitician_data_repo
+    ENV.fetch('EVERYPOLITICIAN_DATA_REPO', 'everypolitician/everypolitician-data')
   end
 end
