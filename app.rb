@@ -6,9 +6,8 @@ class PullRequestReview
   include WebhookHandler
 
   def perform(repository_full_name, number)
-    client = Octokit::Client.new
-    pull_request = client.pull_request(repository_full_name, number)
-    files = client.pull_request_files(repository_full_name, number)
+    pull_request = github.pull_request(repository_full_name, number)
+    files = github.pull_request_files(repository_full_name, number)
     ep_popolo = files.find_all { |file| file[:filename].match(/ep-popolo-v1.0\.json$/) }
     ep_popolo.each do |file|
       # Get the JSON and parse it
@@ -35,5 +34,11 @@ class PullRequestReview
     payload = JSON.parse(request.body.read)
     return unless %w(opened synchronize).include?(payload['action'])
     self.class.perform_async(payload['repository']['full_name'], payload['number'])
+  end
+
+  private
+
+  def github
+    @github ||= Octokit::Client.new(access_token: ENV['GITHUB_ACCESS_TOKEN'])
   end
 end
