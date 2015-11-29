@@ -12,8 +12,8 @@ class PullRequestReview
     ep_popolo = files.find_all { |file| file[:filename].match(/ep-popolo-v1.0\.json$/) }
     ep_popolo.each do |file|
       # Get the JSON and parse it
-      before = JSON.parse(open(file[:raw_url]).read)
-      after = JSON.parse(open(file[:raw_url].sub(pull_request[:head][:sha], pull_request[:base][:sha])).read)
+      before = JSON.parse(open(file[:raw_url].sub(pull_request[:head][:sha], pull_request[:base][:sha])).read)
+      after = JSON.parse(open(file[:raw_url]).read)
       stats = {}
       %w[persons organizations].each do |collection|
         before_map = Hash[before[collection].map { |item| [item['id'], item] }]
