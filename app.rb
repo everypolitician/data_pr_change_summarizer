@@ -58,9 +58,9 @@ end
 class PullRequestReview
   include WebhookHandler
 
-  def perform(repository_full_name, number)
-    pull_request = github.pull_request(repository_full_name, number)
-    files = github.pull_request_files(repository_full_name, number)
+  def perform(pull_request_number)
+    pull_request = github.pull_request(everypolitician_data_repo, pull_request_number)
+    files = github.pull_request_files(everypolitician_data_repo, pull_request_number)
     popolo_files = FindPopoloFiles.from(files).map do |file|
       before = open(file[:raw_url].sub(pull_request[:head][:sha], pull_request[:base][:sha])).read
       after = open(file[:raw_url]).read
@@ -71,16 +71,17 @@ class PullRequestReview
     template = ERB.new(File.read('comment_template.md.erb'))
     comment = template.result(binding)
 
-    github.add_comment(repository_full_name, number, comment)
+    github.add_comment(everypolitician_data_repo, pull_request_number, comment)
   end
 
   def handle_webhook
-    return unless request.env['HTTP_X_GITHUB_EVENT'] == 'pull_request'
+    unless request.env['HTTP_X_EVERYPOLITICIAN_EVENT'] == 'pull_request_opened'
+      warn "Unhandled EveryPolitician event: #{request.env['HTTP_X_EVERYPOLITICIAN_EVENT']}"
+      return
+    end
     request.body.rewind
     payload = JSON.parse(request.body.read)
-    return unless payload['repository']['full_name'] == everypolitician_data_repo
-    return unless %w(opened synchronize).include?(payload['action'])
-    self.class.perform_async(payload['repository']['full_name'], payload['number'])
+    self.class.perform_async(payload['pull_request_url'].split('/').last)
   end
 
   private
