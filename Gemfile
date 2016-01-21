@@ -7,3 +7,8 @@ gem 'puma'
 gem 'pry'
 gem 'octokit'
 gem 'rack-github_webhooks'
+gem 'rake'
+
+group :test do
+  gem 'minitest'
+end

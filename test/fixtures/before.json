@@ -1,0 +1,24 @@
+{
+  "persons": [
+    {
+      "id": "ef41232b-daa4-40fd-a39f-1ff900e3b1c2"
+    },
+    {
+      "id": "3ec0c09e-462f-4b26-9596-bbcd0683f43e"
+    },
+    {
+      "id": "c74ad586-c6b1-4e9b-92cd-23babc136856"
+    }
+  ],
+  "organizations": [
+    {
+      "id": "4d814738-39d3-4a09-835d-32a2ed47c3c3"
+    },
+    {
+      "id": "88f2ef1f-f686-4496-a41c-98b6bb3ccaa7"
+    },
+    {
+      "id": "47c71c45-e37e-4936-ba3d-e4abee929da0"
+    }
+  ]
+}
