@@ -1,6 +1,59 @@
 require 'webhook_handler'
 require 'octokit'
 require 'open-uri'
+require 'erb'
+
+class FindPopoloFiles
+  def self.from(files)
+    files.find_all { |file| file[:filename].match(/ep-popolo-v1.0\.json$/) }
+  end
+end
+
+class ComparePopolo
+  Changes = Struct.new(:added, :removed)
+
+  attr_reader :before
+  attr_reader :after
+
+  def self.read(before_file, after_file)
+    parse(File.read(before_file), File.read(after_file))
+  end
+
+  def self.parse(before_string, after_string)
+    before = JSON.parse(before_string, symbolize_names: true)
+    after = JSON.parse(after_string, symbolize_names: true)
+    new(before, after)
+  end
+
+  def initialize(before, after)
+    @before = before
+    @after = after
+  end
+
+  def changed_ids(collection)
+    before_ids = before[collection.to_sym].map { |item| item[:id] }
+    after_ids = after[collection.to_sym].map { |item| item[:id] }
+    Changes.new(after_ids - before_ids, before_ids - after_ids)
+  end
+end
+
+class PopoloFile
+  attr_reader :path
+  attr_reader :comparer
+
+  def initialize(path, comparer)
+    @path = path
+    @comparer = comparer
+  end
+
+  def people
+    comparer.changed_ids(:persons)
+  end
+
+  def organizations
+    comparer.changed_ids(:organizations)
+  end
+end
 
 class PullRequestReview
   include WebhookHandler
@@ -8,24 +61,17 @@ class PullRequestReview
   def perform(repository_full_name, number)
     pull_request = github.pull_request(repository_full_name, number)
     files = github.pull_request_files(repository_full_name, number)
-    ep_popolo = files.find_all { |file| file[:filename].match(/ep-popolo-v1.0\.json$/) }
-    stats = {}
-    ep_popolo.each do |file|
-      # Get the JSON and parse it
-      before = JSON.parse(open(file[:raw_url].sub(pull_request[:head][:sha], pull_request[:base][:sha])).read)
-      after = JSON.parse(open(file[:raw_url]).read)
-      %w[persons organizations].each do |collection|
-        stats[file] ||= {}
-        stats[file][collection] ||= {}
-        before_ids = before[collection].map { |item| item['id'] }
-        after_ids = after[collection].map { |item| item['id'] }
-        logger.info "collection=#{collection} added=#{(after_ids - before_ids).size} removed=#{(before_ids - after_ids).size}"
-
-        stats[file][collection]['added'] = after_ids - before_ids
-        stats[file][collection]['removed'] = before_ids - after_ids
-      end
+    popolo_files = FindPopoloFiles.from(files).map do |file|
+      before = open(file[:raw_url].sub(pull_request[:head][:sha], pull_request[:base][:sha])).read
+      after = open(file[:raw_url]).read
+      comparer = ComparePopolo.parse(before, after)
+      PopoloFile.new(file[:filename], comparer)
     end
-    p stats
+
+    template = ERB.new(File.read('comment_template.md.erb'))
+    comment = template.result(binding)
+
+    github.add_comment(repository_full_name, number, comment)
   end
 
   def handle_webhook
