@@ -1,0 +1,48 @@
+<% popolo_files.each do |file| %>
+# id changes in `<%= file.path %>`
+
+## People
+
+### Added
+
+<% if file.people.added.any? %>
+<% file.people.added.each do |id| %>
+- `<%= id %>`
+<% end %>
+<% else %>
+No ids added
+<% end %>
+
+### Removed
+
+<% if file.people.removed.any? %>
+<% file.people.removed.each do |id| %>
+- `<%= id %>`
+<% end %>
+<% else %>
+No ids removed
+<% end %>
+
+## Organizations
+
+### Added
+
+<% if file.organizations.added.any? %>
+<% file.organizations.added.each do |id| %>
+- `<%= id %>`
+<% end %>
+<% else %>
+No ids added
+<% end %>
+
+### Removed
+
+<% if file.organizations.removed.any? %>
+<% file.organizations.removed.each do |id| %>
+- `<%= id %>`
+<% end %>
+<% else %>
+No ids removed
+<% end %>
+
+<% end %>
