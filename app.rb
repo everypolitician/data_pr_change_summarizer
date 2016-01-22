@@ -4,8 +4,10 @@ require 'open-uri'
 require 'erb'
 
 class FindPopoloFiles
+  POPOLO_FILE_REGEX = /ep-popolo-v(\d+\.)?(\d+\.)?\d+\.json$/
+
   def self.from(files)
-    files.find_all { |file| file[:filename].match(/ep-popolo-v1.0\.json$/) }
+    files.find_all { |file| file[:filename].match(POPOLO_FILE_REGEX) }
   end
 end
 
