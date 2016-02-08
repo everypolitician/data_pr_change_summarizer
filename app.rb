@@ -1,5 +1,6 @@
-require 'webhook_handler'
-require 'octokit'
+require 'bundler'
+Bundler.require
+
 require 'open-uri'
 require 'erb'
 
@@ -22,8 +23,8 @@ class ComparePopolo
   end
 
   def self.parse(before_string, after_string)
-    before = JSON.parse(before_string, symbolize_names: true)
-    after = JSON.parse(after_string, symbolize_names: true)
+    before = Everypolitician::Popolo.parse(before_string)
+    after = Everypolitician::Popolo.parse(after_string)
     new(before, after)
   end
 
@@ -33,9 +34,14 @@ class ComparePopolo
   end
 
   def changed_ids(collection)
-    before_ids = before[collection.to_sym].map { |item| item[:id] }
-    after_ids = after[collection.to_sym].map { |item| item[:id] }
+    before_ids = before.__send__(collection).map { |item| item.id }
+    after_ids = after.__send__(collection).map { |item| item.id }
     Changes.new(after_ids - before_ids, before_ids - after_ids)
+  end
+
+  def changed(collection)
+    ids = changed_ids(collection)
+    Changes.new(ids.added.map { |id| after.persons.find { |p| p.id == id } }, [])
   end
 end
 

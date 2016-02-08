@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/everypolitician/everypolitician-popolo
+  revision: 6f35a2a427d70f381747f26f477510fffa92eb9a
+  branch: equality
+  specs:
+    everypolitician-popolo (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -41,6 +48,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  everypolitician-popolo!
   minitest
   octokit
   pry
@@ -50,4 +58,4 @@ DEPENDENCIES
   webhook_handler (~> 0.4.0)
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
