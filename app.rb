@@ -13,53 +13,54 @@ class FindPopoloFiles
 end
 
 class ComparePopolo
-  Changes = Struct.new(:added, :removed)
-
   attr_reader :before
   attr_reader :after
+  attr_reader :path
 
-  def self.read(before_file, after_file)
-    parse(File.read(before_file), File.read(after_file))
+  def self.parse(options)
+    before = Everypolitician::Popolo.parse(options[:before])
+    after = Everypolitician::Popolo.parse(options[:after])
+    new(before: before, after: after, path: options[:path])
   end
 
-  def self.parse(before_string, after_string)
-    before = Everypolitician::Popolo.parse(before_string)
-    after = Everypolitician::Popolo.parse(after_string)
-    new(before, after)
+  def initialize(options)
+    @before = options[:before]
+    @after = options[:after]
+    @path = options[:path]
   end
 
-  def initialize(before, after)
-    @before = before
-    @after = after
+  def people_added
+    after.persons - before.persons
   end
 
-  def changed_ids(collection)
-    before_ids = before.__send__(collection).map { |item| item.id }
-    after_ids = after.__send__(collection).map { |item| item.id }
-    Changes.new(after_ids - before_ids, before_ids - after_ids)
+  def people_removed
+    before.persons - after.persons
   end
 
-  def changed(collection)
-    ids = changed_ids(collection)
-    Changes.new(ids.added.map { |id| after.persons.find { |p| p.id == id } }, [])
+  def organizations_added
+    after.organizations - before.organizations
+  end
+
+  def organizations_removed
+    before.organizations - after.organizations
   end
 end
 
-class PopoloFile
-  attr_reader :path
-  attr_reader :comparer
+class ReviewChanges
+  attr_reader :popolo_files
 
-  def initialize(path, comparer)
-    @path = path
-    @comparer = comparer
+  def initialize(popolo_before_after)
+    @popolo_files = popolo_before_after.map do |opts|
+      ComparePopolo.parse(opts)
+    end
   end
 
-  def people
-    comparer.changed_ids(:persons)
+  def to_html
+    template.result(binding)
   end
 
-  def organizations
-    comparer.changed_ids(:organizations)
+  def template
+    @template ||= ERB.new(File.read('comment_template.md.erb'))
   end
 end
 
@@ -69,17 +70,19 @@ class PullRequestReview
   def perform(pull_request_number)
     pull_request = github.pull_request(everypolitician_data_repo, pull_request_number)
     files = github.pull_request_files(everypolitician_data_repo, pull_request_number)
-    popolo_files = FindPopoloFiles.from(files).map do |file|
-      before = open(file[:raw_url].sub(pull_request[:head][:sha], pull_request[:base][:sha])).read
-      after = open(file[:raw_url]).read
-      comparer = ComparePopolo.parse(before, after)
-      PopoloFile.new(file[:filename], comparer)
+    popolo_before_after = FindPopoloFiles.from(files).map do |file|
+      {
+        path: file[:filename],
+        before: open(file[:raw_url].sub(pull_request[:head][:sha], pull_request[:base][:sha])).read,
+        after: open(file[:raw_url]).read
+      }
     end
 
-    template = ERB.new(File.read('comment_template.md.erb'))
-    comment = template.result(binding)
-
-    github.add_comment(everypolitician_data_repo, pull_request_number, comment)
+    github.add_comment(
+      everypolitician_data_repo,
+      pull_request_number,
+      ReviewChanges.new(popolo_before_after).to_html
+    )
   end
 
   def handle_webhook
