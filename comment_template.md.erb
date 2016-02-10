@@ -1,48 +1,48 @@
 <% popolo_files.each do |file| %>
-Summary of id changes in `<%= file.path %>`:
+Summary of changes in `<%= file.path %>`:
 
 ## People
 
 ### Added
 
-<% if file.people.added.any? %>
-<% file.people.added.each do |id| %>
-- `<%= id %>`
+<% if file.people_added.any? %>
+<% file.people_added.each do |person| %>
+- `<%= person.id %>` - <%= person.name %>
 <% end %>
 <% else %>
-No ids added
+No people added
 <% end %>
 
 ### Removed
 
-<% if file.people.removed.any? %>
-<% file.people.removed.each do |id| %>
-- `<%= id %>`
+<% if file.people_removed.any? %>
+<% file.people_removed.each do |person| %>
+- `<%= person.id %>` - <%= person.name %>
 <% end %>
 <% else %>
-No ids removed
+No people removed
 <% end %>
 
 ## Organizations
 
 ### Added
 
-<% if file.organizations.added.any? %>
-<% file.organizations.added.each do |id| %>
-- `<%= id %>`
+<% if file.organizations_added.any? %>
+<% file.organizations_added.each do |org| %>
+- `<%= org.id %>` - <%= org.name %>
 <% end %>
 <% else %>
-No ids added
+No organizations added
 <% end %>
 
 ### Removed
 
-<% if file.organizations.removed.any? %>
-<% file.organizations.removed.each do |id| %>
-- `<%= id %>`
+<% if file.organizations_removed.any? %>
+<% file.organizations_removed.each do |org| %>
+- `<%= org.id %>` - <%= org.name %>
 <% end %>
 <% else %>
-No ids removed
+No organizations removed
 <% end %>
 
 <% end %>
