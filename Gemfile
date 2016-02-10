@@ -8,7 +8,7 @@ gem 'pry'
 gem 'octokit'
 gem 'rack-github_webhooks'
 gem 'rake'
-gem 'everypolitician-popolo', git: 'https://github.com/everypolitician/everypolitician-popolo', branch: 'equality'
+gem 'everypolitician-popolo', git: 'https://github.com/everypolitician/everypolitician-popolo', branch: 'master'
 
 group :test do
   gem 'minitest'

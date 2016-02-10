@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/everypolitician/everypolitician-popolo
-  revision: 6f35a2a427d70f381747f26f477510fffa92eb9a
-  branch: equality
+  revision: a9528c4d32697d7ae6a3013cb1e9e4c030be5079
+  branch: master
   specs:
     everypolitician-popolo (0.1.0)
 
