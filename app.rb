@@ -78,16 +78,15 @@ class PullRequestReview
       }
     end
 
-    changes_summary = ReviewChanges.new(popolo_before_after).to_html
-    if changes_summary.empty?
-      warn "No changes detected in #{pull_request_number} popolo"
-      return
+    begin
+      github.add_comment(
+        everypolitician_data_repo,
+        pull_request_number,
+        ReviewChanges.new(popolo_before_after).to_html
+      )
+    rescue Octokit::UnprocessableEntity => e
+      warn "No changes detected on pull request #{pull_request_number}"
     end
-    github.add_comment(
-      everypolitician_data_repo,
-      pull_request_number,
-      changes_summary
-    )
   end
 
   def handle_webhook
