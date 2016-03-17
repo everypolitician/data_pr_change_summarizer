@@ -78,10 +78,15 @@ class PullRequestReview
       }
     end
 
+    changes_summary = ReviewChanges.new(popolo_before_after).to_html
+    if changes_summary.empty?
+      warn "No changes detected in #{pull_request_number} popolo"
+      return
+    end
     github.add_comment(
       everypolitician_data_repo,
       pull_request_number,
-      ReviewChanges.new(popolo_before_after).to_html
+      changes_summary
     )
   end
 
