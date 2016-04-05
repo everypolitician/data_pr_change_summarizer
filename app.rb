@@ -29,6 +29,19 @@ class ComparePopolo
     @path = options[:path]
   end
 
+  def people_name_changes
+    name_hash_pre =  Hash[ before.persons.map { |p| [p.id, p.name] } ]
+    name_hash_post = Hash[ after.persons.map  { |p| [p.id, p.name] } ]
+    in_both = name_hash_pre.keys & name_hash_post.keys
+    in_both.select { |id| name_hash_pre[id].downcase != name_hash_post[id].downcase }.map { |id|
+      {
+        id: id,
+        was: name_hash_pre[id],
+        now: name_hash_post[id],
+      }
+    }
+  end
+
   def people_added
     after.persons - before.persons
   end
