@@ -23,6 +23,16 @@ No people added
 No people removed
 <% end %>
 
+### Name Changes
+
+<% if file.people_name_changes.any? %>
+<% file.people_name_changes.each do |r| %>
+- `<%= r[:id] %>`: <%= r[:was] %> → <%= r[:now] %>
+<% end %>
+<% else %>
+No name changes
+<% end %>
+
 ## Organizations
 
 ### Added
