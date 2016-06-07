@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/everypolitician/everypolitician-popolo
-  revision: a9528c4d32697d7ae6a3013cb1e9e4c030be5079
+  revision: 1870b151f531e90e84df071fa88be91a1cd97e0a
   branch: master
   specs:
-    everypolitician-popolo (0.1.0)
+    everypolitician-popolo (0.3.2)
 
 GEM
   remote: https://rubygems.org/
