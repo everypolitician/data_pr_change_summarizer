@@ -33,6 +33,16 @@ No people removed
 No name changes
 <% end %>
 
+### Wikidata Changes
+
+<% if file.wikidata_links_changed.any? %>
+<% file.wikidata_links_changed.each do |r| %>
+- `<%= r[:id] %>`: <%= r[:was] %> → <%= r[:now] %>
+<% end %>
+<% else %>
+No changes
+<% end %>
+
 ## Organizations
 
 ### Added
