@@ -42,10 +42,10 @@ describe ReviewChanges do
 
   it 'renders the comment template' do
     comment = subject.to_html.split(/^### /).find { |s| s.start_with? 'Additional Name Changes' }
-    assert comment.include?('- `11`: Removed: Tommy.')
-    assert comment.include?('- `12`: Added: Jackie.')
-    assert comment.include?('- `13`: Added: Katy ﹠ Katie.')
-    assert comment.include?('- `14`: Removed: Ted. Added: Eddie.')
+    assert comment.include?('- `11` (Tom): Removed: Tommy.')
+    assert comment.include?('- `12` (Jack): Added: Jackie.')
+    assert comment.include?('- `13` (Kate): Added: Katy ﹠ Katie.')
+    assert comment.include?('- `14` (Edward): Removed: Ted. Added: Eddie.')
     refute comment.include?('- `1`')
     refute comment.include?('- `10`')
     refute comment.include?('- `15`')
