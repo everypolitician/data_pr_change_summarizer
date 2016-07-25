@@ -37,7 +37,7 @@ No name changes
 
 <% if file.people_additional_name_changes.any? %>
 <% file.people_additional_name_changes.each do |r| %>
-- `<%= r[:id] %>`: <% if r[:removed].any? %>Removed: <%= r[:removed].join(" ﹠ ") %>. <% end %><% if r[:added].any? %>Added: <%= r[:added].join(" ﹠ ") %>.<% end %>
+- `<%= r[:id] %>` (<%= r[:name] %>): <% if r[:removed].any? %>Removed: <%= r[:removed].join(" ﹠ ") %>. <% end %><% if r[:added].any? %>Added: <%= r[:added].join(" ﹠ ") %>.<% end %>
 <% end %>
 <% else %>
 No name changes

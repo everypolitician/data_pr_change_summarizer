@@ -29,15 +29,21 @@ class ComparePopolo
     @path = options[:path]
   end
 
+  def before_names
+    @name_hash_pre ||= Hash[ before.persons.map { |p| [p.id, p.name] } ]
+  end
+
+  def after_names
+    @name_hash_post ||= Hash[ after.persons.map { |p| [p.id, p.name] } ]
+  end
+
   def people_name_changes
-    name_hash_pre =  Hash[ before.persons.map { |p| [p.id, p.name] } ]
-    name_hash_post = Hash[ after.persons.map  { |p| [p.id, p.name] } ]
-    in_both = name_hash_pre.keys & name_hash_post.keys
-    in_both.select { |id| name_hash_pre[id].downcase != name_hash_post[id].downcase }.map { |id|
+    in_both = before_names.keys & after_names.keys
+    in_both.select { |id| before_names[id].downcase != after_names[id].downcase }.map { |id|
       {
         id: id,
-        was: name_hash_pre[id],
-        now: name_hash_post[id],
+        was: before_names[id],
+        now: after_names[id],
       }
     }
   end
@@ -50,9 +56,10 @@ class ComparePopolo
     names_all_pre =  Hash[ before.persons.map { |p| [p.id, all_names.(p)] } ]
     names_all_post = Hash[ after.persons.map  { |p| [p.id, all_names.(p)] } ]
     in_both = names_all_pre.keys & names_all_post.keys
-    in_both.select { |id| names_all_pre[id] != names_all_post[id].to_set }.map { |id|
+    in_both.select { |id| names_all_pre[id] != names_all_post[id] }.map { |id|
       {
         id: id,
+        name: before_names[id],
         removed: (names_all_pre[id] - names_all_post[id]).to_a,
         added:   (names_all_post[id] - names_all_pre[id]).to_a,
       }
