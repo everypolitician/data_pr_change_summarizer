@@ -42,6 +42,23 @@ class ComparePopolo
     }
   end
 
+  def people_additional_name_changes
+    all_names = ->(p) { 
+      other_names = p.other_names.map { |n| n[:name] } rescue []
+      (other_names | [ p.name ]).to_set
+    }
+    names_all_pre =  Hash[ before.persons.map { |p| [p.id, all_names.(p)] } ]
+    names_all_post = Hash[ after.persons.map  { |p| [p.id, all_names.(p)] } ]
+    in_both = names_all_pre.keys & names_all_post.keys
+    in_both.select { |id| names_all_pre[id] != names_all_post[id].to_set }.map { |id|
+      {
+        id: id,
+        removed: (names_all_pre[id] - names_all_post[id]).to_a,
+        added:   (names_all_post[id] - names_all_pre[id]).to_a,
+      }
+    }
+  end
+
   def people_added
     after.persons - before.persons
   end
