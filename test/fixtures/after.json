@@ -37,6 +37,20 @@
       "name": "Knesset 2",
       "organization_id": "legislature",
       "start_date": "1951-08-20"
+    },
+    {
+      "classification": "general election",
+      "end_date": "2006-07-30",
+      "id": "Q1781350",
+      "name": "Democratic Republic of the Congo general election 2006",
+      "start_date": "2006-07-30"
+    },
+    {
+      "classification": "general election",
+      "end_date": "2011-11-28",
+      "id": "Q218835",
+      "name": "Democratic Republic of the Congo general election, 2011",
+      "start_date": "2011-11-28"
     }
   ]
 }
