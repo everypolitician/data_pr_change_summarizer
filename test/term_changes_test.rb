@@ -52,9 +52,4 @@ describe ReviewChanges do
     comment = subject.to_html
     assert comment.include?('term/101')
   end
-
-  if 'should not mention any unchanged terms in the comments' do
-    comment = subject.to_html
-    assert !comment.include?('term/23')
-  end
 end
