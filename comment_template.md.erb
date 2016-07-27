@@ -97,13 +97,4 @@ No terms added
 No terms removed
 <% end %>
 
-## Broken Terms
-
-<% if file.broken_terms.any? %>
-The following terms look broken:
-	<% file.broken_terms.each do |t| %>
-		<%= t.id %>
-	<% end %>
-<% end %>
-
 <% end %>
