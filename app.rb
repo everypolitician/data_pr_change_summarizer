@@ -95,12 +95,6 @@ class ComparePopolo
     before.organizations - after.organizations
   end
 
-  def broken_terms
-    broken_terms = after.events.select do |event|
-      event[:classification] == "legislative period" && (event[:id] =~ /^(term)\/?\d+/).nil?
-    end
-  end
-
   def terms_added
     terms_after - terms_before
   end
