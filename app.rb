@@ -101,10 +101,6 @@ class ComparePopolo
     end
   end
 
-  def test
-    true
-  end
-
   def terms_added
     terms_after - terms_before
   end
