@@ -95,30 +95,34 @@ class ComparePopolo
     before.organizations - after.organizations
   end
 
-  def terms_added
-    event = "legislative period"
-    events_added(event)
+  class Events
+    def initialize(classification, before, after)
+      @classification = classification
+      @before = before
+      @after = after
+    end
+
+    def events_before
+      @before.events.select { |event| event[:classification] == @classification }
+    end
+
+    def events_after
+      @after.events.select { |event| event[:classification] == @classification }
+    end
+
+    def added
+      events_after - events_before
+    end
+
+    def removed
+      events_before - events_after
+    end
   end
 
-  def terms_removed
-    event = "legislative period"
-    events_removed(event)
-  end
-
-  def events_added(event)
-    events_after(event) - events_before(event)
-  end
-
-  def events_removed(event)
-    events_before(event) - events_after(event)
-  end
-
-  def events_before(classification)
-    before.events.select { |event| event[:classification] == classification }
-  end
-
-  def events_after(classification)
-    after.events.select { |event| event[:classification] == classification }
+  def terms
+    @terms_obj ||= Events.new("legislative period", before, after)
+    require('pry')
+    binding.pry
   end
 end
 
