@@ -44,12 +44,17 @@ describe ReviewChanges do
 
   it 'should report any added terms in the comments' do
     comment = subject.to_html
-    assert comment.include?('term/42')
-    assert comment.include?('term/88')
+    comment.must_include('term/42')
+    comment.must_include('term/88')
   end
 
   it 'should report any removed terms in the comments' do
     comment = subject.to_html
-    assert comment.include?('term/101')
+    comment.must_include('term/101')
+  end
+
+  it 'should not report any terms that have not been added/removed' do
+    comment = subject.to_html
+    comment.wont_include('term/23')
   end
 end
