@@ -75,6 +75,28 @@ No organizations added
 No organizations removed
 <% end %>
 
+## Terms
+
+### Added
+
+<% if file.terms_added.any? %>
+<% file.terms_added.each do |term| %>
+- `<%= term.id %>`
+<% end %>
+<% else %>
+No terms added
+<% end %>
+
+### Removed
+
+<% if file.terms_removed.any? %>
+<% file.terms_removed.each do |term| %>
+- `<%= term.id %>`
+<% end %>
+<% else %>
+No terms removed
+<% end %>
+
 ## Broken Terms
 
 <% if file.broken_terms.any? %>
