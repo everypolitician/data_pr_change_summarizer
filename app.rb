@@ -103,11 +103,15 @@ class ComparePopolo
     end
 
     def events_before
-      @before.events.select { |event| event[:classification] == @classification }
+      ids_in @before.events.select { |event| event[:classification] == @classification }
     end
 
     def events_after
-      @after.events.select { |event| event[:classification] == @classification }
+      ids_in @after.events.select { |event| event[:classification] == @classification }
+    end
+
+    def ids_in(hash)
+      hash.map { |i| i[:id] }
     end
 
     def added
