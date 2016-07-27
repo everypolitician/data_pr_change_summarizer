@@ -121,8 +121,6 @@ class ComparePopolo
 
   def terms
     @terms_obj ||= Events.new("legislative period", before, after)
-    require('pry')
-    binding.pry
   end
 end
 
