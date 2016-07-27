@@ -96,29 +96,21 @@ class ComparePopolo
   end
 
   def terms_added
-    event = "legislative period"
-    events_added(event)
+    terms_after - terms_before
   end
 
   def terms_removed
-    event = "legislative period"
-    events_removed(event)
+    terms_before - terms_after
   end
 
-  def events_added(event)
-    events_after(event) - events_before(event)
+  def terms_before
+    terms = before.events.select { |event| event[:classification] == "legislative period" }
+    terms.map { |t| t[:id] }
   end
 
-  def events_removed(event)
-    events_before(event) - events_after(event)
-  end
-
-  def events_before(classification)
-    before.events.select { |event| event[:classification] == classification }
-  end
-
-  def events_after(classification)
-    after.events.select { |event| event[:classification] == classification }
+  def terms_after
+    terms = after.events.select { |event| event[:classification] == "legislative period" }
+    terms.map { |t| t[:id] }
   end
 end
 
