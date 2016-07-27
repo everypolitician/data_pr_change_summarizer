@@ -100,6 +100,26 @@ class ComparePopolo
       event[:classification] == "legislative period" && (event[:id] =~ /^(term)\/?\d+/).nil?
     end
   end
+
+  def test
+    true
+  end
+
+  def terms_added
+    terms_after - terms_before
+  end
+
+  def terms_removed
+    terms_before - terms_after
+  end
+
+  def terms_before
+    before.events.select { |event| event[:classification] == "legislative period" }
+  end
+
+  def terms_after
+    after.events.select { |event| event[:classification] == "legislative period" }
+  end
 end
 
 class ReviewChanges
