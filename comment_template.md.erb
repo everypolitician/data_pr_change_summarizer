@@ -75,4 +75,13 @@ No organizations added
 No organizations removed
 <% end %>
 
+## Broken Terms
+
+<% if file.broken_terms.any? %>
+The following terms look broken:
+	<% file.broken_terms.each do |t| %>
+		<%= t.id %>
+	<% end %>
+<% end %>
+
 <% end %>
