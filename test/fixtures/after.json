@@ -20,5 +20,23 @@
     {
       "id": "47e60c56-a663-4cad-b8d8-b63309fdd7c4"
     }
+  ],
+  "events": [
+    {
+      "classification": "legislative period",
+      "end_date": "1951-08-20",
+      "id": "term/1",
+      "name": "Knesset 1",
+      "organization_id": "legislature",
+      "start_date": "1949-02-14"
+    },
+    {
+      "classification": "legislative period",
+      "end_date": "1955-08-15",
+      "id": "term/term",
+      "name": "Knesset 2",
+      "organization_id": "legislature",
+      "start_date": "1951-08-20"
+    }
   ]
 }
