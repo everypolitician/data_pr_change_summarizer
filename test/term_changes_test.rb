@@ -9,11 +9,11 @@ describe 'ComparePopolo' do
   end
 
   it 'should return a list of new terms with expected size' do
-    subject.terms_added.size.must_equal 2
+    subject.terms.added.size.must_equal 2
   end
 
   it 'should return a list of removed terms with expected size' do
-    subject.terms_removed.size.must_equal 1
+    subject.terms.removed.size.must_equal 1
   end
 end
 
