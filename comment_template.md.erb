@@ -81,7 +81,7 @@ No organizations removed
 
 <% if file.terms.added.any? %>
 <% file.terms.added.each do |term| %>
-- `<%= term.id %>`
+- `<%= term %>`
 <% end %>
 <% else %>
 No terms added
@@ -91,7 +91,7 @@ No terms added
 
 <% if file.terms.removed.any? %>
 <% file.terms.removed.each do |term| %>
-- `<%= term.id %>`
+- `<%= term %>`
 <% end %>
 <% else %>
 No terms removed
