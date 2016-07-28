@@ -29,6 +29,20 @@
       "name": "Knesset 1",
       "organization_id": "legislature",
       "start_date": "1949-02-14"
+    },
+    {
+      "classification": "general election",
+      "end_date": "1872-10-12",
+      "id": "Q909878",
+      "name": "Canadian federal election, 1872",
+      "start_date": "1872-07-20"
+    },
+    {
+      "classification": "general election",
+      "end_date": "1874-01-22",
+      "id": "Q909868",
+      "name": "Canadian federal election, 1874",
+      "start_date": "1874-01-22"
     }
   ]
 }

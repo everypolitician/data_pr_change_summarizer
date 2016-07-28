@@ -40,17 +40,24 @@
     },
     {
       "classification": "general election",
-      "end_date": "2006-07-30",
-      "id": "Q1781350",
-      "name": "Democratic Republic of the Congo general election 2006",
-      "start_date": "2006-07-30"
+      "end_date": "1872-10-12",
+      "id": "Q909878",
+      "name": "Canadian federal election, 1872",
+      "start_date": "1872-07-20"
     },
     {
       "classification": "general election",
-      "end_date": "2011-11-28",
-      "id": "Q218835",
-      "name": "Democratic Republic of the Congo general election, 2011",
-      "start_date": "2011-11-28"
+      "end_date": "1887-02-22",
+      "id": "Q374258",
+      "name": "Canadian federal election, 1887",
+      "start_date": "1887-02-22"
+    },
+    {
+      "classification": "general election",
+      "end_date": "1891-03-05",
+      "id": "Q1616009",
+      "name": "Canadian federal election, 1891",
+      "start_date": "1891-03-05"
     }
   ]
 }
