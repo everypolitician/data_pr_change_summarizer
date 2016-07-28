@@ -95,22 +95,36 @@ class ComparePopolo
     before.organizations - after.organizations
   end
 
-  def terms_added
-    terms_after - terms_before
+  class Events
+    def initialize(classification, before, after)
+      @classification = classification
+      @before = before
+      @after = after
+    end
+
+    def events_before
+      ids_in @before.events.select { |event| event[:classification] == @classification }
+    end
+
+    def events_after
+      ids_in @after.events.select { |event| event[:classification] == @classification }
+    end
+
+    def ids_in(hash)
+      hash.map { |i| i[:id] }
+    end
+
+    def added
+      events_after - events_before
+    end
+
+    def removed
+      events_before - events_after
+    end
   end
 
-  def terms_removed
-    terms_before - terms_after
-  end
-
-  def terms_before
-    terms = before.events.select { |event| event[:classification] == "legislative period" }
-    terms.map { |t| t[:id] }
-  end
-
-  def terms_after
-    terms = after.events.select { |event| event[:classification] == "legislative period" }
-    terms.map { |t| t[:id] }
+  def terms
+    @terms_obj ||= Events.new("legislative period", before, after)
   end
 end
 
