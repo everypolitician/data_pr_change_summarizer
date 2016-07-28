@@ -103,15 +103,15 @@ class ComparePopolo
     end
 
     def events_before
-      ids_in @before.events.select { |event| event[:classification] == @classification }
+      names_and_ids_in @before.events.select { |event| event[:classification].include?(@classification) }
     end
 
     def events_after
-      ids_in @after.events.select { |event| event[:classification] == @classification }
+      names_and_ids_in @after.events.select { |event| event[:classification].include?(@classification) }
     end
 
-    def ids_in(hash)
-      hash.map { |i| i[:id] }
+    def names_and_ids_in(hash)
+      hash.map { |i| { id: i[:id], name: i[:name] } }
     end
 
     def added
@@ -125,6 +125,10 @@ class ComparePopolo
 
   def terms
     @terms_obj ||= Events.new("legislative period", before, after)
+  end
+
+  def elections
+    @elections ||= Events.new("election", before, after)
   end
 end
 
