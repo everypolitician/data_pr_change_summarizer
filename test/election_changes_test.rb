@@ -9,7 +9,7 @@ describe 'ComparePopolo' do
   end
 
   it 'should return a list of new elections with expected size' do
-    subject.elections.added.size.must_equal 4
+    subject.elections.added.size.must_equal 2
   end
 
   it 'should return a list of removed elections with expected size' do
@@ -19,43 +19,45 @@ describe 'ComparePopolo' do
 end
 
 
-# describe ReviewChanges do
-#   let(:before_after) do
-#     [
-#       {
-#         before: {
-#           events: [
-#             { classification: 'general election', id: 'term/101' },
-#           	{ classification: 'general election', id: 'term/23' }
-#           ]
-#         }.to_json,
-#         after: {
-#         	events: [
-#           	{ classification: 'legislative period', id: 'term/23' },
-#           	{ classification: 'legislative period', id: 'term/42' },
-#           	{ classification: 'legislative period', id: 'term/88' }
-#           ]
-#         }.to_json,
-#         path: 'foo/bar.json'
-#       }
-#     ]
-#   end
+describe ReviewChanges do
+  let(:before_after) do
+    [
+      {
+        before: {
+          events: [
+            { classification: 'general election', id: 'one', name: 'election one' },
+          	{ classification: 'general election', id: 'two', name: 'election two' }
+          ]
+        }.to_json,
+        after: {
+        	events: [
+            { classification: 'general election', id: 'one', name: 'election one' },
+          	{ classification: 'general election', id: 'three', name: 'election three' },
+          	{ classification: 'general election', id: 'four', name: 'election four' },
+          	{ classification: 'general election', id: 'five', name: 'election five' }
+          ]
+        }.to_json,
+        path: 'foo/bar.json'
+      }
+    ]
+  end
 
-#   subject { ReviewChanges.new(before_after) }
+  subject { ReviewChanges.new(before_after) }
 
-#   it 'should report any added terms in the comments' do
-#     comment = subject.to_html
-#     comment.must_include('term/42')
-#     comment.must_include('term/88')
-#   end
+  it 'should report any added elections in the comments' do
+    comment = subject.to_html
+    comment.must_include('election three')
+    comment.must_include('election four')
+    comment.must_include('election five')
+  end
 
-#   it 'should report any removed terms in the comments' do
-#     comment = subject.to_html
-#     comment.must_include('term/101')
-#   end
+  it 'should report any removed elections in the comments' do
+    comment = subject.to_html
+    comment.must_include('election two')
+  end
 
-#   it 'should not report any terms that have not been added/removed' do
-#     comment = subject.to_html
-#     comment.wont_include('term/23')
-#   end
-# end
+  it 'should not report any elections that have not been added/removed' do
+    comment = subject.to_html
+    comment.wont_include('election one')
+  end
+end
