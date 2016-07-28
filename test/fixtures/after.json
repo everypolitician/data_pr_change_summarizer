@@ -20,5 +20,37 @@
     {
       "id": "47e60c56-a663-4cad-b8d8-b63309fdd7c4"
     }
+  ],
+  "events": [
+    {
+      "classification": "legislative period",
+      "end_date": "1951-08-20",
+      "id": "term/1",
+      "name": "Knesset 1",
+      "organization_id": "legislature",
+      "start_date": "1949-02-14"
+    },
+    {
+      "classification": "legislative period",
+      "end_date": "1955-08-15",
+      "id": "term/term",
+      "name": "Knesset 2",
+      "organization_id": "legislature",
+      "start_date": "1951-08-20"
+    },
+    {
+      "classification": "general election",
+      "end_date": "2006-07-30",
+      "id": "Q1781350",
+      "name": "Democratic Republic of the Congo general election 2006",
+      "start_date": "2006-07-30"
+    },
+    {
+      "classification": "general election",
+      "end_date": "2011-11-28",
+      "id": "Q218835",
+      "name": "Democratic Republic of the Congo general election, 2011",
+      "start_date": "2011-11-28"
+    }
   ]
 }
