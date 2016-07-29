@@ -46,20 +46,18 @@ describe ReviewChanges do
 
   it 'should report any added elections in the comments' do
     comment = subject.to_html
-    require('pry')
-    binding.pry
-    comment.must_include('election three')
-    comment.must_include('election four')
-    comment.must_include('election five')
+    comment.must_include('Argentine general election, 1924')
+    comment.must_include('Argentine general election, 1925')
+    comment.must_include('Argentine general election, 1926')
   end
 
   it 'should report any removed elections in the comments' do
     comment = subject.to_html
-    comment.must_include('election two')
+    comment.must_include('Argentine general election, 1923')
   end
 
   it 'should not report any elections that have not been added/removed' do
     comment = subject.to_html
-    comment.wont_include('election one')
+    comment.wont_include('Argentine general election, 1922')
   end
 end
