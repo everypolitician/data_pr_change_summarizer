@@ -25,16 +25,16 @@ describe ReviewChanges do
       {
         before: {
           events: [
-            { classification: 'general election', id: 'one', name: 'election one' },
-          	{ classification: 'general election', id: 'two', name: 'election two' }
+            { classification: 'general election', id: 'Q1000', name: 'Argentine general election, 1922' },
+          	{ classification: 'general election', id: 'Q2000', name: 'Argentine general election, 1923' }
           ]
         }.to_json,
         after: {
         	events: [
-            { classification: 'general election', id: 'one', name: 'election one' },
-          	{ classification: 'general election', id: 'three', name: 'election three' },
-          	{ classification: 'general election', id: 'four', name: 'election four' },
-          	{ classification: 'general election', id: 'five', name: 'election five' }
+            { classification: 'general election', id: 'Q1000', name: 'Argentine general election, 1922' },
+          	{ classification: 'general election', id: 'Q3000', name: 'Argentine general election, 1924' },
+          	{ classification: 'general election', id: 'Q4000', name: 'Argentine general election, 1925' },
+          	{ classification: 'general election', id: 'Q5000', name: 'Argentine general election, 1926' }
           ]
         }.to_json,
         path: 'foo/bar.json'
@@ -46,6 +46,8 @@ describe ReviewChanges do
 
   it 'should report any added elections in the comments' do
     comment = subject.to_html
+    require('pry')
+    binding.pry
     comment.must_include('election three')
     comment.must_include('election four')
     comment.must_include('election five')
