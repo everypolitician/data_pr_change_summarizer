@@ -4,30 +4,13 @@ Bundler.require
 require 'open-uri'
 require 'erb'
 require 'compare_popolo'
+require 'review_changes'
 
 class FindPopoloFiles
   POPOLO_FILE_REGEX = /ep-popolo-v(\d+\.)?(\d+\.)?\d+\.json$/
 
   def self.from(files)
     files.select { |file| file[:filename].match(POPOLO_FILE_REGEX) }
-  end
-end
-
-class ReviewChanges
-  attr_reader :popolo_files
-
-  def initialize(popolo_before_after)
-    @popolo_files = popolo_before_after.map do |opts|
-      ComparePopolo.parse(opts)
-    end
-  end
-
-  def to_html
-    template.result(binding)
-  end
-
-  def template
-    @template ||= ERB.new(File.read('comment_template.md.erb'))
   end
 end
 
