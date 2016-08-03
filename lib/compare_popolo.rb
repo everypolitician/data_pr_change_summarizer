@@ -74,14 +74,17 @@ class ComparePopolo
 end
 
 class Report
-  class Wikidata
+
+  class Base
     attr_reader :before, :after
 
     def initialize(_before, _after)
       @before = _before
       @after  = _after
     end
+  end
 
+  class Wikidata < Base
     def changed
       prev = Hash[before.persons.map { |p| [p.id, p.wikidata] }]
       post = Hash[after.persons.map  { |p| [p.id, p.wikidata] }]
