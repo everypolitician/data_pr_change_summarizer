@@ -75,4 +75,26 @@ No organizations added
 No organizations removed
 <% end %>
 
+## Terms
+
+### Added
+
+<% if file.terms.added.any? %>
+<% file.terms.added.each do |term| %>
+- `<%= term %>`
+<% end %>
+<% else %>
+No terms added
+<% end %>
+
+### Removed
+
+<% if file.terms.removed.any? %>
+<% file.terms.removed.each do |term| %>
+- `<%= term %>`
+<% end %>
+<% else %>
+No terms removed
+<% end %>
+
 <% end %>
