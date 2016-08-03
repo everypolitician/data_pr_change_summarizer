@@ -53,11 +53,11 @@ class ComparePopolo
   end
 
   def people_added
-    after.persons - before.persons
+    Report::People.new(before, after).added
   end
 
   def people_removed
-    before.persons - after.persons
+    Report::People.new(before, after).removed
   end
 
   def wikidata_links_changed
@@ -81,6 +81,16 @@ class Report
     def initialize(_before, _after)
       @before = _before
       @after  = _after
+    end
+  end
+
+  class People < Base
+    def added
+      after.persons - before.persons
+    end
+
+    def removed
+      before.persons - after.persons
     end
   end
 
