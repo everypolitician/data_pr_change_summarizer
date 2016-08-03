@@ -20,5 +20,44 @@
     {
       "id": "47e60c56-a663-4cad-b8d8-b63309fdd7c4"
     }
+  ],
+  "events": [
+    {
+      "classification": "legislative period",
+      "end_date": "1951-08-20",
+      "id": "term/1",
+      "name": "Knesset 1",
+      "organization_id": "legislature",
+      "start_date": "1949-02-14"
+    },
+    {
+      "classification": "legislative period",
+      "end_date": "1955-08-15",
+      "id": "term/term",
+      "name": "Knesset 2",
+      "organization_id": "legislature",
+      "start_date": "1951-08-20"
+    },
+    {
+      "classification": "general election",
+      "end_date": "1872-10-12",
+      "id": "Q909878",
+      "name": "Canadian federal election, 1872",
+      "start_date": "1872-07-20"
+    },
+    {
+      "classification": "general election",
+      "end_date": "1887-02-22",
+      "id": "Q374258",
+      "name": "Canadian federal election, 1887",
+      "start_date": "1887-02-22"
+    },
+    {
+      "classification": "general election",
+      "end_date": "1891-03-05",
+      "id": "Q1616009",
+      "name": "Canadian federal election, 1891",
+      "start_date": "1891-03-05"
+    }
   ]
 }

@@ -20,5 +20,29 @@
     {
       "id": "47c71c45-e37e-4936-ba3d-e4abee929da0"
     }
+  ],
+  "events": [
+    {
+      "classification": "legislative period",
+      "end_date": "1951-08-20",
+      "id": "term/101",
+      "name": "Knesset 1",
+      "organization_id": "legislature",
+      "start_date": "1949-02-14"
+    },
+    {
+      "classification": "general election",
+      "end_date": "1872-10-12",
+      "id": "Q909878",
+      "name": "Canadian federal election, 1872",
+      "start_date": "1872-07-20"
+    },
+    {
+      "classification": "general election",
+      "end_date": "1874-01-22",
+      "id": "Q909868",
+      "name": "Canadian federal election, 1874",
+      "start_date": "1874-01-22"
+    }
   ]
 }

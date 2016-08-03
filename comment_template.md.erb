@@ -75,4 +75,48 @@ No organizations added
 No organizations removed
 <% end %>
 
+## Terms
+
+### Added
+
+<% if file.terms.added.any? %>
+<% file.terms.added.each do |term| %>
+- `<%= term[:id] %>` - <%= term[:name] %>
+<% end %>
+<% else %>
+No terms added
+<% end %>
+
+### Removed
+
+<% if file.terms.removed.any? %>
+<% file.terms.removed.each do |term| %>
+- `<%= term[:id] %>` - <%= term[:name] %>
+<% end %>
+<% else %>
+No terms removed
+<% end %>
+
+## Elections
+
+### Added
+
+<% if file.elections.added.any? %>
+<% file.elections.added.each do |election| %>
+- `<%= election[:id] %>` - <%= election[:name] %>
+<% end %>
+<% else %>
+No elections added
+<% end %>
+
+### Removed
+
+<% if file.elections.removed.any? %>
+<% file.elections.removed.each do |election| %>
+- `<%= election[:id] %>` - <%= election[:name] %>
+<% end %>
+<% else %>
+No elections removed
+<% end %>
+
 <% end %>

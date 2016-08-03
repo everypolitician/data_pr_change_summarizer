@@ -94,6 +94,42 @@ class ComparePopolo
   def organizations_removed
     before.organizations - after.organizations
   end
+
+  class Events
+    def initialize(classification, before, after)
+      @classification = classification
+      @before = before
+      @after = after
+    end
+
+    def events_before
+      names_and_ids_in @before.events.select { |event| event[:classification].include?(@classification) }
+    end
+
+    def events_after
+      names_and_ids_in @after.events.select { |event| event[:classification].include?(@classification) }
+    end
+
+    def names_and_ids_in(hash)
+      hash.map { |i| { id: i[:id], name: i[:name] } }
+    end
+
+    def added
+      events_after - events_before
+    end
+
+    def removed
+      events_before - events_after
+    end
+  end
+
+  def terms
+    @terms_obj ||= Events.new("legislative period", before, after)
+  end
+
+  def elections
+    @elections ||= Events.new("election", before, after)
+  end
 end
 
 class ReviewChanges
