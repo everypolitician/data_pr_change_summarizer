@@ -5,27 +5,27 @@ describe ReviewChanges do
     [
       {
         before: {
-          persons: [
+          persons:       [
             { id: '123', name: 'Bob' },
-            { id: '456', name: 'Alice' }
+            { id: '456', name: 'Alice' },
           ],
           organizations: [
             { id: 'abc', name: 'Reds' },
-            { id: 'def', name: 'Greens' }
-          ]
+            { id: 'def', name: 'Greens' },
+          ],
         }.to_json,
-        after: {
-          persons: [
+        after:  {
+          persons:       [
             { id: '123', name: 'Bob' },
-            { id: '789', name: 'Carol' }
+            { id: '789', name: 'Carol' },
           ],
           organizations: [
             { id: 'abc', name: 'Reds' },
-            { id: 'ghi', name: 'Blues' }
-          ]
+            { id: 'ghi', name: 'Blues' },
+          ],
         }.to_json,
-        path: 'foo/bar.json'
-      }
+        path:   'foo/bar.json',
+      },
     ]
   end
 

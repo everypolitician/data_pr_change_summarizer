@@ -8,7 +8,7 @@ class FindPopoloFiles
   POPOLO_FILE_REGEX = /ep-popolo-v(\d+\.)?(\d+\.)?\d+\.json$/
 
   def self.from(files)
-    files.find_all { |file| file[:filename].match(POPOLO_FILE_REGEX) }
+    files.select { |file| file[:filename].match(POPOLO_FILE_REGEX) }
   end
 end
 
@@ -30,40 +30,40 @@ class ComparePopolo
   end
 
   def before_names
-    @name_hash_pre ||= Hash[ before.persons.map { |p| [p.id, p.name] } ]
+    @name_hash_pre ||= Hash[before.persons.map { |p| [p.id, p.name] }]
   end
 
   def after_names
-    @name_hash_post ||= Hash[ after.persons.map { |p| [p.id, p.name] } ]
+    @name_hash_post ||= Hash[after.persons.map { |p| [p.id, p.name] }]
   end
 
   def people_name_changes
     in_both = before_names.keys & after_names.keys
-    in_both.select { |id| before_names[id].downcase != after_names[id].downcase }.map { |id|
+    in_both.select { |id| !before_names[id].casecmp(after_names[id].downcase).zero? }.map do |id|
       {
-        id: id,
+        id:  id,
         was: before_names[id],
         now: after_names[id],
       }
-    }
+    end
   end
 
   def people_additional_name_changes
-    all_names = ->(p) { 
+    all_names = lambda do |p|
       other_names = p.other_names.map { |n| n[:name] } rescue []
-      (other_names | [ p.name ]).to_set
-    }
-    names_all_pre =  Hash[ before.persons.map { |p| [p.id, all_names.(p)] } ]
-    names_all_post = Hash[ after.persons.map  { |p| [p.id, all_names.(p)] } ]
+      (other_names | [p.name]).to_set
+    end
+    names_all_pre =  Hash[before.persons.map { |p| [p.id, all_names.call(p)] }]
+    names_all_post = Hash[after.persons.map  { |p| [p.id, all_names.call(p)] }]
     in_both = names_all_pre.keys & names_all_post.keys
-    in_both.select { |id| names_all_pre[id] != names_all_post[id] }.map { |id|
+    in_both.select { |id| names_all_pre[id] != names_all_post[id] }.map do |id|
       {
-        id: id,
-        name: before_names[id],
+        id:      id,
+        name:    before_names[id],
         removed: (names_all_pre[id] - names_all_post[id]).to_a,
         added:   (names_all_post[id] - names_all_pre[id]).to_a,
       }
-    }
+    end
   end
 
   def people_added
@@ -79,8 +79,8 @@ class ComparePopolo
     post = Hash[after.persons.map  { |p| [p.id, p.wikidata] }]
     in_both = prev.keys & post.keys
     in_both.select { |id| prev[id] != post[id] }.map do |id|
-      { 
-        id: id,
+      {
+        id:  id,
         was: prev[id] || 'none',
         now: post[id] || 'none',
       }
@@ -122,9 +122,9 @@ class PullRequestReview
     files = github.pull_request_files(everypolitician_data_repo, pull_request_number)
     popolo_before_after = FindPopoloFiles.from(files).map do |file|
       {
-        path: file[:filename],
+        path:   file[:filename],
         before: open(file[:raw_url].sub(pull_request[:head][:sha], pull_request[:base][:sha])).read,
-        after: open(file[:raw_url]).read
+        after:  open(file[:raw_url]).read,
       }
     end
 
@@ -134,7 +134,7 @@ class PullRequestReview
         pull_request_number,
         ReviewChanges.new(popolo_before_after).to_html
       )
-    rescue Octokit::UnprocessableEntity => e
+    rescue Octokit::UnprocessableEntity
       warn "No changes detected on pull request #{pull_request_number}"
     end
   end

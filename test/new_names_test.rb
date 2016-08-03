@@ -7,34 +7,34 @@ describe ReviewChanges do
         before: {
           persons: [
             { id: '1',  name: 'Albert' },
-            { id: '10', name: 'Fred', other_names: [ { name: 'Freddy' } ]},
-            { id: '11', name: 'Tom', other_names: [ { name: 'Tommy' } ]},
+            { id: '10', name: 'Fred', other_names: [{ name: 'Freddy' }] },
+            { id: '11', name: 'Tom', other_names: [{ name: 'Tommy' }] },
             { id: '12', name: 'Jack' },
             { id: '13', name: 'Kate' },
-            { id: '14', name: 'Edward', other_names: [ { name: 'Ed' }, { name: 'Ted' }] },
+            { id: '14', name: 'Edward', other_names: [{ name: 'Ed' }, { name: 'Ted' }] },
             { id: '15', name: 'Bob', other_names: [{ name: 'Bobby' }] },
           ],
         }.to_json,
-        after: {
+        after:  {
           persons: [
             # No changes, no other names
             { id: '1',  name: 'Albert' },
             # No changes, with other names
-            { id: '10', name: 'Fred', other_names: [ { name: 'Freddy' } ]},
+            { id: '10', name: 'Fred', other_names: [{ name: 'Freddy' }] },
             # Remove name
             { id: '11', name: 'Tom' },
             # Add name
             { id: '12', name: 'Jack', other_names: [{ name: 'Jackie' }] },
             # Add multiple names
-            { id: '13', name: 'Kate', other_names: [ { name: 'Katy' }, { name: 'Katie' }] },
+            { id: '13', name: 'Kate', other_names: [{ name: 'Katy' }, { name: 'Katie' }] },
             # Change one name
-            { id: '14', name: 'Edward', other_names: [ { name: 'Ed' }, { name: 'Eddie' }] },
+            { id: '14', name: 'Edward', other_names: [{ name: 'Ed' }, { name: 'Eddie' }] },
             # Swap primary
             { id: '15', name: 'Bobby', other_names: [{ name: 'Bob' }] },
           ],
         }.to_json,
-        path: 'foo/bar.json'
-      }
+        path:   'foo/bar.json',
+      },
     ]
   end
 
