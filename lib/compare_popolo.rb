@@ -65,11 +65,11 @@ class ComparePopolo
   end
 
   def organizations_added
-    after.organizations - before.organizations
+    Report::Organizations.new(before, after).added
   end
 
   def organizations_removed
-    before.organizations - after.organizations
+    Report::Organizations.new(before, after).removed
   end
 end
 
@@ -81,6 +81,16 @@ class Report
     def initialize(_before, _after)
       @before = _before
       @after  = _after
+    end
+  end
+
+  class Organizations < Base
+    def added
+      after.organizations - before.organizations
+    end
+
+    def removed
+      before.organizations - after.organizations
     end
   end
 
