@@ -7,41 +7,41 @@ describe ReviewChanges do
         before: {
           persons: [
             {
-              id: 1,
-              name: 'Taivo',
+              id:          1,
+              name:        'Taivo',
               identifiers: [{ identifier: 'Q03785077', scheme: 'wikidata' }],
             },
             {
-              id: 2,
-              name: 'Douglas',
+              id:          2,
+              name:        'Douglas',
               identifiers: [{ identifier: 'Q42', scheme: 'wikidata' }],
             },
-            { 
-              id: 3,
+            {
+              id:   3,
               name: 'Fred',
             },
-          ]
+          ],
         }.to_json,
-        after: {
+        after:  {
           persons: [
             {
-              id: 1,
-              name: 'Taivo',
+              id:          1,
+              name:        'Taivo',
               identifiers: [{ identifier: 'Q3785077', scheme: 'wikidata' }],
             },
             {
-              id: 2,
-              name: 'Douglas'
+              id:   2,
+              name: 'Douglas',
             },
-            { 
-              id: 3,
-              name: 'Fred',
+            {
+              id:          3,
+              name:        'Fred',
               identifiers: [{ identifier: 'Q447392', scheme: 'wikidata' }],
             },
-          ]
+          ],
         }.to_json,
-        path: 'foo/bar.json'
-      }
+        path:   'foo/bar.json',
+      },
     ]
   end
 
