@@ -61,16 +61,7 @@ class ComparePopolo
   end
 
   def wikidata_links_changed
-    prev = Hash[before.persons.map { |p| [p.id, p.wikidata] }]
-    post = Hash[after.persons.map  { |p| [p.id, p.wikidata] }]
-    in_both = prev.keys & post.keys
-    in_both.select { |id| prev[id] != post[id] }.map do |id|
-      {
-        id:  id,
-        was: prev[id] || 'none',
-        now: post[id] || 'none',
-      }
-    end
+    Report::Wikidata.new(before, after).changed
   end
 
   def organizations_added
@@ -81,3 +72,30 @@ class ComparePopolo
     before.organizations - after.organizations
   end
 end
+
+class Report
+  class Wikidata
+    attr_reader :before, :after
+
+    def initialize(_before, _after)
+      @before = _before
+      @after  = _after
+    end
+
+    def changed
+      prev = Hash[before.persons.map { |p| [p.id, p.wikidata] }]
+      post = Hash[after.persons.map  { |p| [p.id, p.wikidata] }]
+      in_both = prev.keys & post.keys
+      in_both.select { |id| prev[id] != post[id] }.map do |id|
+        {
+          id:  id,
+          was: prev[id] || 'none',
+          now: post[id] || 'none',
+        }
+      end
+    end
+  end
+end
+
+
+
