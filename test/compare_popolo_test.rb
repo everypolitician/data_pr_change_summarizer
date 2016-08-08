@@ -28,4 +28,16 @@ describe ComparePopolo do
   it 'returns the full popolo for removed organizations' do
     assert_equal [Everypolitician::Popolo::Organization.new(id: '88f2ef1f-f686-4496-a41c-98b6bb3ccaa7')], subject.organizations_removed
   end
+
+  it 'should return the full popolo for removed terms' do
+    assert_equal [Everypolitician::Popolo::Event.new(classification: 'legislative period',
+                                                     id:             'term/52',
+                                                     name:           '52nd Parliament of the United Kingdom'),], subject.terms_removed
+  end
+
+  it 'should return the full popolo for add terms' do
+    assert_equal [Everypolitician::Popolo::Event.new(classification: 'legislative period',
+                                                     id:             'term/54',
+                                                     name:           '54th Parliament of the United Kingdom'),], subject.terms_added
+  end
 end
