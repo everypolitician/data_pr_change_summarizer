@@ -31,6 +31,20 @@
       "classification": "legislative period",
       "id": "term/53",
       "name": "53rd Parliament of the United Kingdom"
+    },
+    {
+      "classification": "general election",
+      "end_date": "1991",
+      "id": "Q20311786",
+      "name": "Abkhazian parliamentary election, 1991",
+      "start_date": "1991"
+    },
+    {
+      "classification": "general election",
+      "end_date": "1996-11-23",
+      "id": "Q4668016",
+      "name": "Abkhazian parliamentary election, 1996",
+      "start_date": "1996-11-23"
     }
   ]
 }
