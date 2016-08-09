@@ -35,9 +35,21 @@ describe ComparePopolo do
                                                      name:           '52nd Parliament of the United Kingdom'),], subject.terms_removed
   end
 
-  it 'should return the full popolo for add terms' do
+  it 'should return the full popolo for added terms' do
     assert_equal [Everypolitician::Popolo::Event.new(classification: 'legislative period',
                                                      id:             'term/54',
                                                      name:           '54th Parliament of the United Kingdom'),], subject.terms_added
+  end
+
+  it 'should return the full popolo for removed elections' do
+    assert_equal [Everypolitician::Popolo::Event.new(classification: 'general election',
+                                                     id:             'Q20311786',
+                                                     name:           'Abkhazian parliamentary election, 1991'),], subject.elections_removed
+  end
+
+  it 'should return the full popolo for added elections' do
+    assert_equal [Everypolitician::Popolo::Event.new(classification: 'general election',
+                                                     id:             'Q16960120',
+                                                     name:           'Abkhazian parliamentary election, 2002'),], subject.elections_added
   end
 end
