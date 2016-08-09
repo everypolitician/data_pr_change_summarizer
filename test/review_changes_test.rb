@@ -24,6 +24,20 @@ describe ReviewChanges do
               id:             'term/53',
               name:           '53rd Parliament of the United Kingdom',
             },
+            {
+              classification: 'general election',
+              end_date:       '1991',
+              id:             'Q20311786',
+              name:           'Abkhazian parliamentary election, 1991',
+              start_date:     '1991',
+            },
+            {
+              classification: 'general election',
+              end_date:       '1996-11-23',
+              id:             'Q4668016',
+              name:           'Abkhazian parliamentary election, 1996',
+              start_date:     '1996-11-23',
+            },
           ],
         }.to_json,
         after:  {
@@ -46,6 +60,20 @@ describe ReviewChanges do
               id:             'term/54',
               name:           '54th Parliament of the United Kingdom',
             },
+            {
+              classification: 'general election',
+              end_date:       '1996-11-23',
+              id:             'Q4668016',
+              name:           'Abkhazian parliamentary election, 1996',
+              start_date:     '1996-11-23',
+            },
+            {
+              classification: 'general election',
+              end_date:       '2002-03-02',
+              id:             'Q16960120',
+              name:           'Abkhazian parliamentary election, 2002',
+              start_date:     '2002-03-02',
+            },
           ],
         }.to_json,
         path:   'foo/bar.json',
@@ -64,5 +92,7 @@ describe ReviewChanges do
     assert comment.include?('- `ghi` - Blues')
     assert comment.include?('- `term/54` - 54th Parliament of the United Kingdom')
     assert comment.include?('- `term/52` - 52nd Parliament of the United Kingdom')
+    assert comment.include?('- `Q16960120` - Abkhazian parliamentary election, 2002')
+    assert comment.include?('- `Q20311786` - Abkhazian parliamentary election, 1991')
   end
 end
