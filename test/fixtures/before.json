@@ -20,5 +20,17 @@
     {
       "id": "47c71c45-e37e-4936-ba3d-e4abee929da0"
     }
+  ],
+  "events": [
+    {
+      "classification": "legislative period",
+      "id": "term/52",
+      "name": "52nd Parliament of the United Kingdom"
+    },
+    {
+      "classification": "legislative period",
+      "id": "term/53",
+      "name": "53rd Parliament of the United Kingdom"
+    }
   ]
 }

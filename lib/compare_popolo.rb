@@ -44,4 +44,12 @@ class ComparePopolo
   def organizations_removed
     Report::Organizations.new(before, after).removed
   end
+
+  def terms_added
+    Report::Terms.new(before, after).added
+  end
+
+  def terms_removed
+    Report::Terms.new(before, after).removed
+  end
 end
