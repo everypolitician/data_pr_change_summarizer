@@ -1,3 +1,6 @@
+<% if popolo_files.empty? %>
+No Popolo files were changed in this pull request.
+<% else %>
 <% popolo_files.each do |file| %>
 Summary of changes in `<%= file.path %>`:
 
@@ -119,4 +122,5 @@ No elections added
 No elections removed
 <% end %>
 
+<% end %>
 <% end %>
