@@ -1,4 +1,4 @@
-# Review Changes
+# EveryPolitician data change summarizer
 
 This is the code the EverPolitician bot uses to inspect data pull requests (specifically those are on the
 [everypolitician-data](https://github.com/everypolitician/everypolitician-data) repo)
