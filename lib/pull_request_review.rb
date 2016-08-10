@@ -18,8 +18,8 @@ class PullRequestReview
         pull_request_number,
         ReviewChanges.new(popolo_before_after).to_html
       )
-    rescue Octokit::UnprocessableEntity
-      warn "No changes detected on pull request #{pull_request_number}"
+    rescue Octokit::UnprocessableEntity => e
+      warn "Unable to review pull request #{pull_request_number}: #{e.message}"
     end
   end
 
