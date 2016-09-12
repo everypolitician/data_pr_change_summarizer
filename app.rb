@@ -9,7 +9,7 @@ class PullRequestReview
     github.add_comment(
       everypolitician_data_repo,
       pull_request_number,
-      PullRequestSummarizer::Summarizer.new(pull_request_number).summarize
+      Everypolitician::PullRequest::Summary.new(pull_request_number).as_markdown
     )
   rescue PullRequestSummarizer::Summarizer::Error => e
     warn e.message

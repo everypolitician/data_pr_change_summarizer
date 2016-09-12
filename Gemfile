@@ -9,7 +9,7 @@ gem 'octokit'
 gem 'rack-github_webhooks'
 gem 'rake'
 gem 'rubocop', '~> 0.42.0'
-gem 'pull_request_summarizer'
+gem 'everypolitician-pull_request'
 gem 'dotenv'
 
 group :test do
