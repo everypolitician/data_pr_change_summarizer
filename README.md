@@ -1,3 +1,5 @@
+**DEPRECATED** September 2016: This repository has been deprecated in favor of [everypolitician-pull_request](https://github.com/everypolitician/everypolitician-pull_request). That library contains the core functionality of this web app and future enhancements should be added to that library.
+
 # EveryPolitician data change summarizer
 
 This is the code the EverPolitician bot uses to inspect data pull requests (specifically those are on the
